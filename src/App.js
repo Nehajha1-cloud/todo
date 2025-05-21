@@ -5,7 +5,6 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [newTasks, setNewTasks] = useState("");
 
-  // Add a new task
   const addTask = (e) => {
     e.preventDefault();
     if (newTasks.trim()) {
@@ -19,21 +18,18 @@ function App() {
     }
   };
 
-  // Toggle completion status
   const toogletask = (id) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
 
-    // Debug log to verify toggle
     console.log("Task toggled:");
     updatedTasks.forEach((task) => {
       console.log(`- ${task.text}: completed = ${task.completed}`);
     });
   };
 
-  // Delete a task
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
