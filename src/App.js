@@ -3,33 +3,35 @@ import "./App.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [newTasks, setNewTasks] = useState("");
+  const [newTask, setNewTask] = useState("");
 
+  // नयाँ task थप्ने function
   const addTask = (e) => {
     e.preventDefault();
-    if (newTasks.trim()) {
-      const newTask = {
+    if (newTask.trim()) {
+      const task = {
         id: Date.now(),
-        text: newTasks,
+        text: newTask,
         completed: false,
       };
-      setTasks([...tasks, newTask]);
-      setNewTasks("");
+      setTasks([...tasks, task]);
+      setNewTask("");
     }
   };
 
-  const toogletask = (id) => {
+  // checkbox toggle गर्ने function
+  const toggleTask = (id) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
 
-    console.log("Task toggled:");
-    updatedTasks.forEach((task) => {
-      console.log(`- ${task.text}: completed = ${task.completed}`);
-    });
+    // console मा पनि देखाउने
+    const toggled = updatedTasks.find((task) => task.id === id);
+    console.log(`Task "${toggled.text}" completed status: ${toggled.completed}`);
   };
 
+  // task delete गर्ने function
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
@@ -37,30 +39,25 @@ function App() {
   return (
     <div className="todo">
       <h2>To-do List</h2>
-<form onSubmit={addTask}>
-  <label htmlFor="taskInput" style={{ display: "none" }}>
-    Task
-  </label>
-  <input
-    id="taskInput"
-    type="text"
-    value={newTasks}
-    onChange={(e) => setNewTasks(e.target.value)}
-    placeholder="Enter a task"
-  />
-  <button type="submit">Add</button>
-</form>
-
+      <form onSubmit={addTask}>
+        <input
+          type="text"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          placeholder="Enter a task"
+        />
+        <button type="submit">Add</button>
+      </form>
 
       <ul>
         {tasks.map((task) => (
-          <li key={task.id}>
-            <span
-              onClick={() => toogletask(task.id)}
-              className={task.completed ? "completed" : ""}
-            >
-              {task.text}
-            </span>
+          <li key={task.id} className={task.completed ? "completed" : ""}>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => toggleTask(task.id)}
+            />
+            <span>{task.text}</span>
             <button onClick={() => deleteTask(task.id)}>Delete</button>
           </li>
         ))}

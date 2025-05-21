@@ -67,13 +67,8 @@ li:hover {
   background-color: #f1f1f1;
 }
 
-span {
-  flex: 1;
-  cursor: pointer;
-}
-
-.completed {
+.completed span {
   text-decoration: line-through;
-  color: black;
-  cursor: pointer;
+  color: gray;
+  opacity: 0.6;
 }
