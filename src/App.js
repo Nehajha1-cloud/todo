@@ -4,8 +4,9 @@ import "./App.css";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+    
+  //Adding//
 
-  // नयाँ task थप्ने function
   const addTask = (e) => {
     e.preventDefault();
     if (newTask.trim()) {
@@ -18,20 +19,20 @@ function App() {
       setNewTask("");
     }
   };
+//Toggle//
 
-  // checkbox toggle गर्ने function
   const toggleTask = (id) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
 
-    // console मा पनि देखाउने
     const toggled = updatedTasks.find((task) => task.id === id);
     console.log(`Task "${toggled.text}" completed status: ${toggled.completed}`);
   };
 
-  // task delete गर्ने function
+//Delete//
+
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
